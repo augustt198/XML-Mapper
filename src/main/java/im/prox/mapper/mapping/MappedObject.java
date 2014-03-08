@@ -25,7 +25,6 @@ public class MappedObject {
 				for(Class c : annotations) {
 					if(a.annotationType() == c) {
 						isAnnotated = true;
-						System.out.println("A match!");
 					}
 				}
 

@@ -6,6 +6,8 @@ import org.dom4j.Element;
 
 public class IntegerInterpreter extends Interpreter<Integer> {
 
+	static { new IntegerInterpreter(); }
+
 	public IntegerInterpreter() {
 		super(Integer.class);
 	}
