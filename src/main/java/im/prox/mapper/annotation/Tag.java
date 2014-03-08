@@ -5,14 +5,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * This annotation is used to indicate the presents of the
+ * annotated means
+ */
 @Conflict({
-		Tag.class,
-		Text.class
+		Text.class,
+		Array.class,
+		Attribute.class
 })
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Attribute {
-
-	String value();
+public @interface Tag {
 
 }

@@ -1,15 +1,15 @@
 package im.prox.mapper.mapping;
 
-import im.prox.mapper.annotation.Attribute;
-import im.prox.mapper.annotation.List;
-import im.prox.mapper.annotation.Path;
-import im.prox.mapper.annotation.Text;
+import im.prox.mapper.annotation.*;
 import im.prox.mapper.interpret.Interpreter;
 import im.prox.mapper.interpret.InterpreterStore;
 
 import static im.prox.mapper.utils.ReflectUtils.*;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FieldDescriptor {
 
@@ -17,29 +17,53 @@ public class FieldDescriptor {
 	private String path;		// @Path
 	private String attribute;	// @Attribute
 	private boolean text;		// @Text
-	private Class listType;		// @List
+	private Class listType;		// @Array
 	private boolean list;		//  ""
+	private boolean tag;		// @Tag
 
-	public FieldDescriptor(Field field) {
+	public FieldDescriptor(Field field) throws MappingException, IllegalAnnotationException {
 		this.field = field;
 
+		path = null;
+		attribute = null;
+		text = false;
+
+		List<Class<?extends Annotation>> present = new ArrayList<>();
+
 		Attribute attributeAnnotation = getFieldAnnotation(field, Attribute.class);
-		attribute = attributeAnnotation == null ?  null : attributeAnnotation.value();
+		checkConflicts(present, Attribute.class);
+		if(attributeAnnotation != null) {
+			attribute = attributeAnnotation.value();
+			present.add(Attribute.class);
+		}
 
 		Path pathAnnotation = getFieldAnnotation(field, Path.class);
-		path = pathAnnotation == null ? null : pathAnnotation.value();
+		checkConflicts(present, Path.class);
+		if(pathAnnotation != null) {
+			path = pathAnnotation.value();
+			present.add(Path.class);
+		}
 
 		Text textAnnotation = getFieldAnnotation(field, Text.class);
-		text = textAnnotation != null;
+		checkConflicts(present, Text.class);
+		if(textAnnotation != null) {
+			text = true;
+			present.add(Text.class);
+		}
 
-		List listAnnotation = getFieldAnnotation(field, List.class);
+		Array listAnnotation = getFieldAnnotation(field, Array.class);
 		if(listAnnotation != null) {
+			if(!field.getType().isArray() && field.getType() != List.class && field.getType() != ArrayList.class) {
+				throw new MappingException("The @Array annotation can only be applied to arrays and Lists!");
+			}
 			list = true;
 			listType = listAnnotation.single();
 		} else {
 			list = false;
 		}
 
+		Tag tagAnnotation = getFieldAnnotation(field, Tag.class);
+		tag = tagAnnotation != null;
 	}
 
 	public Field getField() {
@@ -81,6 +105,13 @@ public class FieldDescriptor {
 
 	public boolean hasInterpreter() {
 		return getInterpreter() != null;
+	}
+
+	@Override
+	public String toString() {
+		String s = "FieldDescriptor{field=" + field.getName() + ",path=" + path + ",attribute=" + attribute;
+		s += ",text=" + text + ",listType=" + listType + ",list=" + list + "}";
+		return s;
 	}
 
 }
