@@ -16,6 +16,7 @@ public class ElementUtils {
 		String[] parts = path.split("\\.");
 		Element element = root;
 		for(String tag : parts) {
+			if(element == null) return null;
 			element = element.element(tag);
 		}
 		return element;

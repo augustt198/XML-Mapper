@@ -31,22 +31,22 @@ public class FieldDescriptor {
 		List<Class<?extends Annotation>> present = new ArrayList<>();
 
 		Attribute attributeAnnotation = getFieldAnnotation(field, Attribute.class);
-		checkConflicts(present, Attribute.class);
 		if(attributeAnnotation != null) {
+			checkConflicts(present, Attribute.class);
 			attribute = attributeAnnotation.value();
 			present.add(Attribute.class);
 		}
 
 		Path pathAnnotation = getFieldAnnotation(field, Path.class);
-		checkConflicts(present, Path.class);
 		if(pathAnnotation != null) {
+			checkConflicts(present, Path.class);
 			path = pathAnnotation.value();
 			present.add(Path.class);
 		}
 
 		Text textAnnotation = getFieldAnnotation(field, Text.class);
-		checkConflicts(present, Text.class);
 		if(textAnnotation != null) {
+			checkConflicts(present, Text.class);
 			text = true;
 			present.add(Text.class);
 		}
@@ -110,7 +110,7 @@ public class FieldDescriptor {
 	@Override
 	public String toString() {
 		String s = "FieldDescriptor{field=" + field.getName() + ",path=" + path + ",attribute=" + attribute;
-		s += ",text=" + text + ",listType=" + listType + ",list=" + list + "}";
+		s += ",text=" + text + ",listType=" + listType + ",list=" + list + ",type=" + field.getType().getSimpleName()+ "}";
 		return s;
 	}
 

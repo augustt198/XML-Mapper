@@ -23,8 +23,8 @@ public class ReflectUtils {
 	}
 
 	public static <T extends Annotation> T getFieldAnnotation(Field field, Class<T> type) {
-		for(Annotation a : field.getAnnotations()) {
-			if(a.getClass() == type) {
+		for(Annotation a : field.getDeclaredAnnotations()) {
+			if(a.annotationType() == type) {
 				return (T) a;
 			}
 		}

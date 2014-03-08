@@ -9,7 +9,11 @@ import java.util.List;
 
 public class MappedObject {
 
-	public static final Class[] annotations = {Attribute.class, Path.class, Text.class, Root.class};
+	public static final Class[] allAnnotations = {
+			Attribute.class, Path.class,
+			Text.class, Root.class,
+			Tag.class, Array.class
+	};
 
 	private Object object;
 	private List<FieldDescriptor> fields;
@@ -22,7 +26,7 @@ public class MappedObject {
 			boolean isAnnotated = false;
 			/* Ensure that the given field has at least one XML mapping annotation */
 			for(Annotation a : field.getAnnotations()) {
-				for(Class c : annotations) {
+				for(Class c : allAnnotations) {
 					if(a.annotationType() == c) {
 						isAnnotated = true;
 					}
