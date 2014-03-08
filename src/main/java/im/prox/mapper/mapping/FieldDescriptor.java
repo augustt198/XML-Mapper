@@ -97,7 +97,7 @@ public class FieldDescriptor {
 	}
 
 	public boolean isArray() {
-		return list;
+		return array;
 	}
 
 	public boolean isTag() {
@@ -133,7 +133,7 @@ public class FieldDescriptor {
 	@Override
 	public String toString() {
 		String s = "FieldDescriptor{field=" + field.getName() + ",path=" + path + ",attribute=" + attribute;
-		s += ",text=" + text + ",listType=" + listType + ",list=" + list + ",type=" + field.getType().getSimpleName()+ "}";
+		s += ",text=" + text + ",listType=" + listType + ",list=" + array + ",type=" + field.getType().getSimpleName()+ "}";
 		return s;
 	}
 
