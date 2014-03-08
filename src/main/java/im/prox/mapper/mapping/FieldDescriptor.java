@@ -19,7 +19,7 @@ public class FieldDescriptor {
 	private String attribute;	// @Attribute
 	private boolean text;		// @Text
 	private Class listType;		// @Array
-	private boolean list;		//  ""
+	private boolean array;		//  ""
 	private boolean tag;		// @Tag
 
 	public FieldDescriptor(Field field, MappedObject base) throws MappingException, IllegalAnnotationException {
@@ -58,10 +58,10 @@ public class FieldDescriptor {
 			if(!field.getType().isArray() && field.getType() != List.class && field.getType() != ArrayList.class) {
 				throw new MappingException("The @Array annotation can only be applied to arrays and Lists!");
 			}
-			list = true;
+			array = true;
 			listType = listAnnotation.single();
 		} else {
-			list = false;
+			array = false;
 		}
 
 		Tag tagAnnotation = getFieldAnnotation(field, Tag.class);
@@ -92,11 +92,11 @@ public class FieldDescriptor {
 		return text;
 	}
 
-	public Class getListType() {
+	public Class getArrayType() {
 		return listType;
 	}
 
-	public boolean isList() {
+	public boolean isArray() {
 		return list;
 	}
 
