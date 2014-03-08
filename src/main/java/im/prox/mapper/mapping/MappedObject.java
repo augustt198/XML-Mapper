@@ -15,13 +15,13 @@ public class MappedObject {
 			Tag.class, Array.class
 	};
 
-	private Object object;
+	private Mappable mappable;
 	private List<FieldDescriptor> fields;
 
-	public MappedObject(Object object) {
-		this.object = object;
+	public MappedObject(Mappable mappable) {
+		this.mappable = mappable;
 		fields = new ArrayList<>();
-		for(Field field : object.getClass().getDeclaredFields()) {
+		for(Field field : mappable.getClass().getDeclaredFields()) {
 
 			boolean isAnnotated = false;
 			/* Ensure that the given field has at least one XML mapping annotation */
@@ -37,15 +37,15 @@ public class MappedObject {
 			if(!isAnnotated) continue;
 
 			try {
-				fields.add(new FieldDescriptor(field));
+				fields.add(new FieldDescriptor(field, this));
 			} catch(MappingException | IllegalAnnotationException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	public Object getObject() {
-		return object;
+	public Mappable getInstance() {
+		return mappable;
 	}
 
 	public List<FieldDescriptor> getFieldDescriptors() {

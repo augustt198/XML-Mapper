@@ -13,6 +13,7 @@ import java.util.List;
 
 public class FieldDescriptor {
 
+	private MappedObject base;
 	private Field field;
 	private String path;		// @Path
 	private String attribute;	// @Attribute
@@ -21,8 +22,9 @@ public class FieldDescriptor {
 	private boolean list;		//  ""
 	private boolean tag;		// @Tag
 
-	public FieldDescriptor(Field field) throws MappingException, IllegalAnnotationException {
+	public FieldDescriptor(Field field, MappedObject base) throws MappingException, IllegalAnnotationException {
 		this.field = field;
+		this.base = base;
 
 		path = null;
 		attribute = null;
@@ -74,8 +76,16 @@ public class FieldDescriptor {
 		return path;
 	}
 
+	public boolean hasPath() {
+		return path != null;
+	}
+
 	public String getAttribute() {
 		return attribute;
+	}
+
+	public boolean hasAttribute() {
+		return attribute != null;
 	}
 
 	public boolean isText() {
@@ -88,6 +98,10 @@ public class FieldDescriptor {
 
 	public boolean isList() {
 		return list;
+	}
+
+	public boolean isTag() {
+		return tag;
 	}
 
 	/* "aliases" */
@@ -105,6 +119,15 @@ public class FieldDescriptor {
 
 	public boolean hasInterpreter() {
 		return getInterpreter() != null;
+	}
+
+	public void setValue(Object o) {
+		field.setAccessible(true);
+		try {
+			field.set(base.getInstance(), o);
+		} catch(IllegalAccessException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
