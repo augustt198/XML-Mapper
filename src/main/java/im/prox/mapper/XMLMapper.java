@@ -14,6 +14,11 @@ public class XMLMapper {
 	/**
 	 * Main entry point for XML to Object mapping
 	 */
+	public Mappable parse(Mappable type, Element base) throws MappingException {
+		MappedObject mapped = new MappedObject(type);
+		return MappingFactory.map(mapped, base);
+	}
+
 	public Mappable parse(Class<? extends Mappable> type, Element base) throws MappingException {
 		Constructor<?> constructor = type.getDeclaredConstructors()[0];
 		constructor.setAccessible(true);
@@ -23,9 +28,7 @@ public class XMLMapper {
 		} catch(InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			throw new MappingException("Could not create instance of type to be mapped");
 		}
-		MappedObject mapped = new MappedObject((Mappable) object);
-		return MappingFactory.map(mapped, base);
+		return parse((Mappable) object, base);
 	}
-
 
 }
