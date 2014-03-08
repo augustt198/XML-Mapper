@@ -4,9 +4,9 @@ import org.dom4j.Element;
 
 public abstract class Interpreter<T> {
 
-	Class type;
+	Class<T> type;
 
-	public Interpreter(Class type) {
+	public Interpreter(Class<T> type) {
 		this.type = type;
 		InterpreterStore.addInterpreter(type, this);
 	}
