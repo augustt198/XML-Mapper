@@ -1,4 +1,4 @@
-package im.prox.mapper.annotation;
+package im.prox.mapper.exception;
 
 import java.lang.annotation.Annotation;
 

@@ -1,6 +1,7 @@
 package im.prox.mapper.mapping;
 
 import im.prox.mapper.annotation.*;
+import im.prox.mapper.exception.IllegalAnnotationException;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

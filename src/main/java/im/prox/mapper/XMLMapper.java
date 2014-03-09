@@ -1,5 +1,6 @@
 package im.prox.mapper;
 
+import im.prox.mapper.exception.MissingRequiredFieldException;
 import im.prox.mapper.mapping.Mappable;
 import im.prox.mapper.mapping.MappedObject;
 import im.prox.mapper.mapping.MappingException;
@@ -16,7 +17,12 @@ public class XMLMapper {
 	 */
 	public Mappable parse(Mappable type, Element base) throws MappingException {
 		MappedObject mapped = new MappedObject(type);
-		return MappingFactory.map(mapped, base);
+		try {
+			return MappingFactory.map(mapped, base);
+		} catch(MissingRequiredFieldException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public Mappable parse(Class<? extends Mappable> type, Element base) throws MappingException {

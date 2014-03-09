@@ -6,14 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Meta annotation for marking conflicts between annotations
- * e.g. A field can't both be assigned to the text and attribute
- * of an Element.
+ * Marks a field as necessary and will through an Exception
+ * if it is not present in the XML
  */
-@Target(ElementType.ANNOTATION_TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Conflict {
-
-	public Class[] value();
-
+public @interface Required {
 }

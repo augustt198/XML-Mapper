@@ -1,26 +1,34 @@
 package im.prox.mapper.mapping;
 
+import im.prox.mapper.exception.MissingRequiredFieldException;
 import im.prox.mapper.utils.ElementUtils;
 import org.dom4j.Element;
 
 
 public class MappingFactory {
 
-	public static Mappable map(MappedObject mapped, Element element) {
+	public static Mappable map(MappedObject mapped, Element element) throws MissingRequiredFieldException {
+
 		Mappable mappable = mapped.getInstance();
 
 		for(FieldDescriptor descriptor : mapped.getFieldDescriptors()) {
 			Element context = element;
+			Object val = null;
 			if(descriptor.hasPath()) {
 				context = ElementUtils.resolvePath(element, descriptor.getPath());
 			}
 			if(descriptor.hasAttribute()) {
-				descriptor.setValue(context.attributeValue(descriptor.getAttribute()));
+				val = context.attributeValue(descriptor.getAttribute());
 			} else if(descriptor.isText()) {
-				descriptor.setValue(context.getText());
+				val = context.getText();
 			} else if(descriptor.isTag()) {
-				descriptor.setValue(context != null);
+				val = (context != null);
 			}
+
+			if(val == null) throw new MissingRequiredFieldException(
+					"Required field was not found: " + descriptor.getField().getName());
+
+			descriptor.setValue(val);
 
 		}
 
