@@ -19,8 +19,6 @@ public class Example {
 
 		Person person = new Person();
 
-		MappedObject obj = new MappedObject(person);
-
 		Document doc;
 		try {
 			doc = DocumentHelper.parseText(SAMPLE_XML);
@@ -32,7 +30,7 @@ public class Example {
 		Element base = doc.getRootElement();
 
 		try {
-			person = (Person) MappingFactory.map(obj, base);
+			person = (Person) MappingFactory.map(person, base);
 		} catch(MissingRequiredFieldException e) {
 			e.printStackTrace();
 		}
