@@ -7,9 +7,9 @@ import org.dom4j.Element;
 
 public class MappingFactory {
 
-	public static Mappable map(MappedObject mapped, Element element) throws MissingRequiredFieldException {
+	public static Mappable map(Mappable mappable, Element element) throws MissingRequiredFieldException {
 
-		Mappable mappable = mapped.getInstance();
+		MappedObject mapped = new MappedObject(mappable);
 
 		for(FieldDescriptor descriptor : mapped.getFieldDescriptors()) {
 			Element context = element;
