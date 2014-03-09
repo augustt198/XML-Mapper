@@ -38,10 +38,9 @@ public class Person implements Mappable {
 Values can then be assigned to the `Person` class by using the `MappingFactory`
 ```java
 Person person = new Person();
-MappedObject obj = new MappedObject(person);
 
 try {
-    person = (Person) MappingFactory.map(obj, base);
+    person = (Person) MappingFactory.map(person, base);
 } catch(MissingRequiredFieldException e) {
     e.printStackTrace();
 }
