@@ -47,6 +47,27 @@ try {
 }
 ```
 
+## Annotation Descriptions
+
+#### `@Attribute(String)`
+Gets the value of the attribute given.
+
+#### `@Path(String)`
+Navigates through sub-elements when supplied a string in the format of `tag1.tag2.tag3...` - Should be used in conjunction with annotations that get a value from an element.
+
+#### `@Text`
+Gets the value of the inner text of an element.
+
+#### `@Tag`
+Gets a boolean value based on if the element exists.
+
+#### `@Required`
+Marks the field as necessary to be assigned a value - will throw a `MissingRequiredFieldException` if not.
+
+## Conflicts
+
+Not all annotations can be used in conjuction. Annotations that get a value from an element (`@Attribute`, `@Text`, `@Tag`) will throw an `IllegalAnnotationException` if used with each other.
+
 ## To Do
 * Add mapping for different data types, using `Interpreters`
 * Add mapping for Arrays (`[]` and `List`)
