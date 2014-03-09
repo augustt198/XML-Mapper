@@ -18,6 +18,12 @@ public class Person implements Mappable {
 	@Text
 	public String lastName;
 
+	@Override
+	public String toString() {
+		return (
+			"Person{age=" + age +", firstName=" + firstName + ", lastName=" + lastName + "}"
+		);
+	}
 
 }
 
