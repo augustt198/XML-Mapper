@@ -109,6 +109,10 @@ public class FieldDescriptor {
 		return tag;
 	}
 
+	public boolean isRequired() {
+		return required;
+	}
+
 	/* "aliases" */
 	public Class getType() {
 		return field.getType();

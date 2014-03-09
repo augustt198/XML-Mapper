@@ -17,15 +17,26 @@ public class MappingFactory {
 			if(descriptor.hasPath()) {
 				context = ElementUtils.resolvePath(element, descriptor.getPath());
 			}
-			if(descriptor.hasAttribute()) {
-				val = context.attributeValue(descriptor.getAttribute());
-			} else if(descriptor.isText()) {
-				val = context.getText();
-			} else if(descriptor.isTag()) {
+			if(context == null && descriptor.isRequired()) throw new MissingRequiredFieldException(
+					"Required field was not found: " + descriptor.getField().getName());
+
+			/* Only value annotation that works with null Element */
+			if(descriptor.isTag()) {
 				val = (context != null);
+			} else {
+				if(context != null)  {
+					if(descriptor.hasAttribute()) {
+						val = context.attributeValue(descriptor.getAttribute());
+					} else if(descriptor.isText()) {
+						val = context.getText();
+					} else if(descriptor.isTag()) {
+						val = true;
+					}
+				}
 			}
 
-			if(val == null) throw new MissingRequiredFieldException(
+
+			if(val == null && descriptor.isRequired()) throw new MissingRequiredFieldException(
 					"Required field was not found: " + descriptor.getField().getName());
 
 			descriptor.setValue(val);
