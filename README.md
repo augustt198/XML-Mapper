@@ -47,4 +47,7 @@ try {
 }
 ```
 
-
+## To Do
+* Add mapping for different data types, using `Interpreters`
+* Add mapping for Arrays (`[]` and `List`)
+* Add ability to parse complex sub-elements defined in a `Mappable` class.
