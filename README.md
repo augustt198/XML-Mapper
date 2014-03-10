@@ -41,7 +41,7 @@ Person person = new Person();
 
 try {
     person = (Person) MappingFactory.map(person, /* Your XML Element */);
-} catch(MissingRequiredFieldException e) {
+} catch(MappingException e) {
     e.printStackTrace();
 }
 ```
