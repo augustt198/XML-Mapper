@@ -1,4 +1,4 @@
-package im.prox.mapper.mapping;
+package im.prox.mapper.exception;
 
 public class MappingException extends Exception {
 

@@ -2,6 +2,7 @@ package im.prox.mapper.mapping;
 
 import im.prox.mapper.annotation.*;
 import im.prox.mapper.exception.IllegalAnnotationException;
+import im.prox.mapper.exception.MappingException;
 import im.prox.mapper.interpret.Interpreter;
 import im.prox.mapper.interpret.InterpreterStore;
 
@@ -24,7 +25,7 @@ public class FieldDescriptor {
 	private boolean tag;		// @Tag
 	private boolean required;	// @Required
 
-	public FieldDescriptor(Field field, MappedObject base) throws MappingException, IllegalAnnotationException {
+	public FieldDescriptor(Field field, MappedObject base) throws MappingException {
 		this.field = field;
 		this.base = base;
 

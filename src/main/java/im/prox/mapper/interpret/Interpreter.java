@@ -1,6 +1,6 @@
 package im.prox.mapper.interpret;
 
-import org.dom4j.Element;
+import im.prox.mapper.exception.InterpretationException;
 
 public abstract class Interpreter<T> {
 
@@ -11,6 +11,6 @@ public abstract class Interpreter<T> {
 		InterpreterStore.addInterpreter(type, this);
 	}
 
-	public abstract T convert(Element e) throws InterpretationException;
+	public abstract T convert(String s) throws InterpretationException;
 
 }

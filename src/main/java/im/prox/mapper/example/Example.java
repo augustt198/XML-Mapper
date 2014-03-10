@@ -1,5 +1,6 @@
 package im.prox.mapper.example;
 
+import im.prox.mapper.exception.MappingException;
 import im.prox.mapper.exception.MissingRequiredFieldException;
 import im.prox.mapper.mapping.FieldDescriptor;
 import im.prox.mapper.mapping.MappedObject;
@@ -31,7 +32,7 @@ public class Example {
 
 		try {
 			person = (Person) MappingFactory.map(person, base);
-		} catch(MissingRequiredFieldException e) {
+		} catch(MappingException e) {
 			e.printStackTrace();
 		}
 

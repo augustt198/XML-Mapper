@@ -1,13 +1,20 @@
 package im.prox.mapper.mapping;
 
+import im.prox.mapper.exception.MappingException;
 import im.prox.mapper.exception.MissingRequiredFieldException;
+import im.prox.mapper.interpret.Interpreter;
 import im.prox.mapper.utils.ElementUtils;
 import org.dom4j.Element;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MappingFactory {
 
-	public static Mappable map(Mappable mappable, Element element) throws MissingRequiredFieldException {
+	private static List<Interpreter> interpreters = new ArrayList<>();
+
+	public static Mappable map(Mappable mappable, Element element) throws MappingException {
 
 		MappedObject mapped = new MappedObject(mappable);
 
@@ -44,6 +51,10 @@ public class MappingFactory {
 		}
 
 		return mappable;
+	}
+
+	private static void addInterpreter(Interpreter i) {
+		interpreters.add(i);
 	}
 
 }

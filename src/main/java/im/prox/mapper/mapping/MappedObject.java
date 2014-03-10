@@ -2,6 +2,7 @@ package im.prox.mapper.mapping;
 
 import im.prox.mapper.annotation.*;
 import im.prox.mapper.exception.IllegalAnnotationException;
+import im.prox.mapper.exception.MappingException;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -19,7 +20,7 @@ public class MappedObject {
 	private Mappable mappable;
 	private List<FieldDescriptor> fields;
 
-	public MappedObject(Mappable mappable) {
+	public MappedObject(Mappable mappable) throws MappingException {
 		this.mappable = mappable;
 		fields = new ArrayList<>();
 		for(Field field : mappable.getClass().getDeclaredFields()) {
@@ -37,11 +38,8 @@ public class MappedObject {
 
 			if(!isAnnotated) continue;
 
-			try {
-				fields.add(new FieldDescriptor(field, this));
-			} catch(MappingException | IllegalAnnotationException e) {
-				e.printStackTrace();
-			}
+			fields.add(new FieldDescriptor(field, this));
+
 		}
 	}
 
