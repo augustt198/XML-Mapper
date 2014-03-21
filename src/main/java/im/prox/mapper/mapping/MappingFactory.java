@@ -47,26 +47,35 @@ public class MappingFactory {
 
 			Object obj;
 
-			if(type == Integer.class) {
-				obj = Integer.valueOf(val);
-			} else if(type == Long.class) {
-				obj = Long.valueOf(val);
-			} else if(type == Float.class) {
-				obj = Float.valueOf(val);
-			} else if(type == Double.class) {
-				obj = Float.valueOf(val);
-			} else if(type == Byte.class) {
-				obj = Byte.valueOf(val);
-			} else if(type == Boolean.class) {
-				obj = Boolean.valueOf(val);
-			} else if(type == Date.class) {
-				obj = new Date(Date.parse(val));
-			} else {
+			if(descriptor.isSkippingDefaultCasting()) {
 				Interpreter interpreter = getInterpreter(type);
 				if(interpreter == null) {
 					obj = null;
 				} else {
 					obj = interpreter.convert(val);
+				}
+			} else {
+				if(type == Integer.class) {
+					obj = Integer.valueOf(val);
+				} else if(type == Long.class) {
+					obj = Long.valueOf(val);
+				} else if(type == Float.class) {
+					obj = Float.valueOf(val);
+				} else if(type == Double.class) {
+					obj = Float.valueOf(val);
+				} else if(type == Byte.class) {
+					obj = Byte.valueOf(val);
+				} else if(type == Boolean.class) {
+					obj = Boolean.valueOf(val);
+				} else if(type == Date.class) {
+					obj = new Date(Date.parse(val));
+				} else {
+					Interpreter interpreter = getInterpreter(type);
+					if(interpreter == null) {
+						obj = null;
+					} else {
+						obj = interpreter.convert(val);
+					}
 				}
 			}
 

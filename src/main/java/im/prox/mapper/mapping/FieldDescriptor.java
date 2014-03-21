@@ -21,6 +21,7 @@ public class FieldDescriptor {
 	private boolean array;		// @Array
 	private boolean tag;		// @Tag
 	private boolean required;	// @Required
+	private boolean skipDefaultCasting;
 
 	public FieldDescriptor(Field field, MappedObject base) throws MappingException {
 		this.field = field;
@@ -72,6 +73,10 @@ public class FieldDescriptor {
 		if(tag && field.getType() != Boolean.class) {
 			throw new MappingException("The @Tag annotation can only be applied to boolean types");
 		}
+
+		SkipDefaultCasting castingAnnotation = getFieldAnnotation(field, SkipDefaultCasting.class);
+		skipDefaultCasting = castingAnnotation != null;
+
 	}
 
 	public Field getField() {
@@ -112,6 +117,10 @@ public class FieldDescriptor {
 
 	public boolean isRequired() {
 		return required;
+	}
+
+	public boolean isSkippingDefaultCasting() {
+		return skipDefaultCasting;
 	}
 
 	/* "aliases" */
