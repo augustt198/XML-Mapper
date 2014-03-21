@@ -8,19 +8,21 @@ import org.dom4j.Element;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MappingFactory {
 
 	private static List<Interpreter> interpreters = new ArrayList<>();
 
+	@SuppressWarnings("deprecated")
 	public static Mappable map(Mappable mappable, Element element) throws MappingException {
 
 		MappedObject mapped = new MappedObject(mappable);
 
 		for(FieldDescriptor descriptor : mapped.getFieldDescriptors()) {
 			Element context = element;
-			Object val = null;
+			String val = null;
 			if(descriptor.hasPath()) {
 				context = ElementUtils.resolvePath(element, descriptor.getPath());
 			}
@@ -29,19 +31,44 @@ public class MappingFactory {
 
 			/* Only value annotation that works with null Element */
 			if(descriptor.isTag()) {
-				val = (context != null);
+				descriptor.setValue(context != null);
+				continue;
 			} else {
 				if(context != null)  {
 					if(descriptor.hasAttribute()) {
 						val = context.attributeValue(descriptor.getAttribute());
 					} else if(descriptor.isText()) {
 						val = context.getText();
-					} else if(descriptor.isTag()) {
-						val = true;
 					}
 				}
 			}
 
+			Class type = descriptor.getType();
+			
+			Object obj = null;
+
+			if(type == Integer.class) {
+				obj = Integer.valueOf(val);
+			} else if(type == Long.class) {
+				obj = Long.valueOf(val);
+			} else if(type == Float.class) {
+				obj = Float.valueOf(val);
+			} else if(type == Double.class) {
+				obj = Float.valueOf(val);
+			} else if(type == Byte.class) {
+				obj = Byte.valueOf(val);
+			} else if(type == Boolean.class) {
+				obj = Boolean.valueOf(val);
+			} else if(type == Date.class) {
+				obj = new Date(Date.parse(val));
+			} else {
+				Interpreter interpreter = getInterpreter(type);
+				if(interpreter == null) {
+					obj = null;
+				} else {
+					obj = interpreter.convert(val);
+				}
+			}
 
 			if(val == null && descriptor.isRequired()) throw new MissingRequiredFieldException(
 					"Required field was not found: " + descriptor.getField().getName());
@@ -53,7 +80,17 @@ public class MappingFactory {
 		return mappable;
 	}
 
-	private static void addInterpreter(Interpreter i) {
+	@SuppressWarnings("unchecked")
+	private static <T> Interpreter<T> getInterpreter(Class<T> type) {
+		for(Interpreter i : interpreters) {
+			if(i.getType() == type) {
+				return i;
+			}
+		}
+		return null;
+	}
+
+	public static void addInterpreter(Interpreter i) {
 		interpreters.add(i);
 	}
 

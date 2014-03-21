@@ -4,11 +4,14 @@ import im.prox.mapper.exception.InterpretationException;
 
 public abstract class Interpreter<T> {
 
-	Class<T> type;
+	protected Class<T> type;
 
 	public Interpreter(Class<T> type) {
 		this.type = type;
-		InterpreterStore.addInterpreter(type, this);
+	}
+
+	public Class<T> getType() {
+		return type;
 	}
 
 	public abstract T convert(String s) throws InterpretationException;
