@@ -45,7 +45,7 @@ public class MappingFactory {
 
 			Class type = descriptor.getType();
 
-			Object obj = null;
+			Object obj;
 
 			if(type == Integer.class) {
 				obj = Integer.valueOf(val);
@@ -84,7 +84,7 @@ public class MappingFactory {
 	private static <T> Interpreter<T> getInterpreter(Class<T> type) {
 		for(Interpreter i : interpreters) {
 			if(i.getType() == type) {
-				return i;
+				return (Interpreter<T>) i;
 			}
 		}
 		return null;
