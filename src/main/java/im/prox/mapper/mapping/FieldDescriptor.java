@@ -20,8 +20,8 @@ public class FieldDescriptor {
 	private String path;		// @Path
 	private String attribute;	// @Attribute
 	private boolean text;		// @Text
-	private Class listType;		// @Array
-	private boolean array;		//  ""
+	private Class listType;		// @Array type
+	private boolean array;		// @Array
 	private boolean tag;		// @Tag
 	private boolean required;	// @Required
 
@@ -72,6 +72,9 @@ public class FieldDescriptor {
 
 		Tag tagAnnotation = getFieldAnnotation(field, Tag.class);
 		tag = tagAnnotation != null;
+		if(tag && field.getType() != Boolean.class) {
+			throw new MappingException("The @Tag annotation can only be applied to boolean types");
+		}
 	}
 
 	public Field getField() {
