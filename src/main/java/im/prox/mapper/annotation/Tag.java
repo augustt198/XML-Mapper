@@ -6,8 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is used to indicate the presents of the
- * annotated means
+ * This annotation is used to indicate the presence of an Element
  */
 @Conflict({
 		Text.class,
