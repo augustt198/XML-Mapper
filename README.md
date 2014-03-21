@@ -40,7 +40,7 @@ Values can then be assigned to the `Person` class by using the `MappingFactory`
 Person person = new Person();
 
 try {
-    person = (Person) MappingFactory.map(person, /* Your XML Element */);
+    person = MappingFactory.map(person, /* Your XML Element */);
 } catch(MappingException e) {
     e.printStackTrace();
 }
