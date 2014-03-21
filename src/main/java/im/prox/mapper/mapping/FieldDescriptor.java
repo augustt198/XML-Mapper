@@ -1,10 +1,7 @@
 package im.prox.mapper.mapping;
 
 import im.prox.mapper.annotation.*;
-import im.prox.mapper.exception.IllegalAnnotationException;
 import im.prox.mapper.exception.MappingException;
-import im.prox.mapper.interpret.Interpreter;
-import im.prox.mapper.interpret.InterpreterStore;
 
 import static im.prox.mapper.utils.ReflectUtils.*;
 
@@ -124,14 +121,6 @@ public class FieldDescriptor {
 
 	public String getName() {
 		return field.getName();
-	}
-
-	public Interpreter getInterpreter() {
-		return InterpreterStore.get(field.getType());
-	}
-
-	public boolean hasInterpreter() {
-		return getInterpreter() != null;
 	}
 
 	public void setValue(Object o) {
