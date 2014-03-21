@@ -31,7 +31,7 @@ public class Example {
 		Element base = doc.getRootElement();
 
 		try {
-			person = (Person) MappingFactory.map(person, base);
+			person = MappingFactory.map(person, base);
 		} catch(MappingException e) {
 			e.printStackTrace();
 		}

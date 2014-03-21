@@ -16,7 +16,7 @@ public class MappingFactory {
 	private static List<Interpreter> interpreters = new ArrayList<>();
 
 	@SuppressWarnings("deprecated")
-	public static Mappable map(Mappable mappable, Element element) throws MappingException {
+	public static <T extends Mappable> T map(T mappable, Element element) throws MappingException {
 
 		MappedObject mapped = new MappedObject(mappable);
 
@@ -44,7 +44,7 @@ public class MappingFactory {
 			}
 
 			Class type = descriptor.getType();
-			
+
 			Object obj = null;
 
 			if(type == Integer.class) {
@@ -70,10 +70,10 @@ public class MappingFactory {
 				}
 			}
 
-			if(val == null && descriptor.isRequired()) throw new MissingRequiredFieldException(
+			if(obj == null && descriptor.isRequired()) throw new MissingRequiredFieldException(
 					"Required field was not found: " + descriptor.getField().getName());
 
-			descriptor.setValue(val);
+			descriptor.setValue(obj);
 
 		}
 
