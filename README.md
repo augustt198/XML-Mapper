@@ -68,6 +68,5 @@ Marks the field as necessary to be assigned a value - will throw a `MissingRequi
 Not all annotations can be used in conjuction. Annotations that get a value from an element (`@Attribute`, `@Text`, `@Tag`) will throw an `IllegalAnnotationException` if used with each other.
 
 ## To Do
-* Add mapping for different data types, using `Interpreters`
 * Add mapping for Arrays (`[]` and `List`)
 * Add ability to parse complex sub-elements defined in a `Mappable` class.
