@@ -55,20 +55,22 @@ public class MappingFactory {
 					obj = interpreter.convert(val);
 				}
 			} else {
-				if(type == Integer.class) {
+				if(type == Integer.class || type == int.class) {
 					obj = Integer.valueOf(val);
-				} else if(type == Long.class) {
+				} else if(type == Long.class || type == long.class) {
 					obj = Long.valueOf(val);
-				} else if(type == Float.class) {
+				} else if(type == Float.class || type == float.class) {
 					obj = Float.valueOf(val);
-				} else if(type == Double.class) {
-					obj = Float.valueOf(val);
-				} else if(type == Byte.class) {
+				} else if(type == Double.class || type == double.class) {
+					obj = Double.valueOf(val);
+				} else if(type == Byte.class || type == byte.class) {
 					obj = Byte.valueOf(val);
-				} else if(type == Boolean.class) {
+				} else if(type == Boolean.class || type == boolean.class) {
 					obj = Boolean.valueOf(val);
 				} else if(type == Date.class) {
 					obj = new Date(Date.parse(val));
+				} else if(type == String.class) {
+					obj = val;
 				} else {
 					Interpreter interpreter = getInterpreter(type);
 					if(interpreter == null) {

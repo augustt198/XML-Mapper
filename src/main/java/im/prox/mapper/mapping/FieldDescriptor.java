@@ -1,9 +1,9 @@
 package im.prox.mapper.mapping;
 
+import static im.prox.mapper.utils.ReflectUtils.*;
+
 import im.prox.mapper.annotation.*;
 import im.prox.mapper.exception.MappingException;
-
-import static im.prox.mapper.utils.ReflectUtils.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -31,7 +31,7 @@ public class FieldDescriptor {
 		attribute = null;
 		text = false;
 
-		List<Class<?extends Annotation>> present = new ArrayList<>();
+		List<Class<? extends Annotation>> present = new ArrayList<>();
 
 		Attribute attributeAnnotation = getFieldAnnotation(field, Attribute.class);
 		if(attributeAnnotation != null) {

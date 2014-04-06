@@ -9,7 +9,7 @@ import im.prox.mapper.mapping.Mappable;
 public class Person implements Mappable {
 
 	@Attribute("age")
-	public String age;
+	public int age;
 
 	@Path("name.first")
 	@Text
