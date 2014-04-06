@@ -22,7 +22,7 @@ The class `Person` could be created, using annotations to reflect values in the 
 public class Person implements Mappable {
 
 	@Attribute("age")
-	public String age;
+	public int age;
 
 	@Path("name.first")
 	@Text
